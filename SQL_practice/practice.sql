@@ -82,4 +82,51 @@ FROM movies as m join boxoffice as b
 on m.id = b.movie_id
 where m.year%2=0;
 
+--Find the longest time that an employee has been at the studio 
+SELECT years_employed FROM employees
+order by years_employed desc
+limit 1;
+
+--For each role, find the average number of years employed by employees in that role
+SELECT role, avg(years_employed) FROM employees
+group by role;
+
+--Find the total number of employee years worked in each building
+select building ,sum(years_employed) 
+from employees 
+group by building;
+
+--Find the number of Artists in the studio (without a HAVING clause) 
+SELECT count(*)
+FROM employees
+where role = "Artist";
+
+--Find the number of Employees of each role in the studio
+SELECT role,count(*)
+FROM employees
+group by  role;
+
+--Find the total number of years employed by all Engineers 
+select role,sum(years_employed)
+from employees
+group by role
+having role = "Engineer";
+
+--Find the number of movies each director has directed 
+SELECT m.director, count(*)
+FROM movies as m join boxoffice as b
+on m.id = b.movie_id
+group by m.director;
+
+--Find the total domestic and international sales that can be attributed to each director
+SELECT director, SUM(domestic_sales + international_sales) as Cumulative_sales_from_all_movies
+FROM movies
+    INNER JOIN boxoffice
+        ON movies.id = boxoffice.movie_id
+GROUP BY director;
+
+
+
+
+
 
