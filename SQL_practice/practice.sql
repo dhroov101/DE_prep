@@ -30,3 +30,39 @@ order by population desc limit 2
 SELECT City FROM north_american_cities
 where country= "United States"
 order by population desc limit 2 offset 2
+
+  -- joins 
+--Find the domestic and international sales for each movie
+SELECT Title,domestic_sales, International_sales FROM movies join Boxoffice
+where movies.Id=Boxoffice.Movie_id;
+
+-- Show the sales numbers for each movie that did better internationally rather than domestically
+SELECT Title,domestic_sales, International_sales FROM movies join Boxoffice
+where movies.Id=Boxoffice.Movie_id and International_sales > domestic_sales;
+
+--List all the movies by their ratings in descending order
+SELECT Title,domestic_sales, International_sales FROM movies join Boxoffice
+where movies.Id=Boxoffice.Movie_id
+order by Boxoffice.rating desc;
+
+--Find the list of all buildings that have employees
+SELECT b.building_name, count(*) 
+FROM employees as e join Buildings as b
+where b.building_name=e.building
+group by b.building_name;
+
+--List all buildings and the distinct employee roles in each building (including empty buildings)
+SELECT DISTINCT building_name, role 
+FROM buildings 
+  LEFT JOIN employees
+    ON building_name = building;
+
+--Find the name and role of all employees who have not been assigned to a building
+select name, role from employees where building is null;
+
+--Find the names of the buildings that hold no employees
+SELECT building_name
+FROM buildings LEFT JOIN employees
+ON building_name = building
+    where building is NULL;
+
