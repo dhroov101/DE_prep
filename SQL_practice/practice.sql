@@ -66,3 +66,20 @@ FROM buildings LEFT JOIN employees
 ON building_name = building
     where building is NULL;
 
+--List all movies and their combined sales in millions of dollars
+SELECT m.title, (b.domestic_sales + b.International_sales)/1000000 as sales_in_millions
+FROM movies as m join boxoffice as b
+on m.id = b.movie_id;
+
+--List all movies and their ratings in percent 
+SELECT m.title, (b.rating*10) as percent_rating
+FROM movies as m join boxoffice as b
+on m.id = b.movie_id;
+
+--List all movies that were released on even number years
+SELECT m.title
+FROM movies as m join boxoffice as b
+on m.id = b.movie_id
+where m.year%2=0;
+
+
